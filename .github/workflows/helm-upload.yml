@@ -1,0 +1,53 @@
+# This is a basic workflow to help you get started with Actions
+
+name: helm-upload
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Helm Chart Releaser
+        # You may pin to the exact commit or the version.
+        # uses: helm/chart-releaser-action@a917fd15b20e8b64b94d9158ad54cd6345335584
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          # The chart-releaser version to use (default: v1.6.1)
+          version: # optional, default is v1.6.1
+          # The relative path to the chart-releaser config file
+          config: # optional
+          # The charts directory
+          charts_dir: # optional, default is charts
+          # Where to install the cr tool
+          install_dir: # optional
+          # Just install cr tool
+          install_only: # optional
+          # Skip the packaging option (do your custom packaging before running this action)
+          skip_packaging: # optional
+          # Skip package upload if release exists
+          skip_existing: # optional
+          # Mark the created GitHub release as 'latest'
+          mark_as_latest: # optional, default is true
+          # Upload chart packages directly into publishing branch
+          packages_with_index: # optional
+          # Name of the branch to be used to push the index and artifacts. (default to: gh-pages but it is not set in the action it is a default value for the chart-releaser binary)
+          pages_branch: # optional
+                
